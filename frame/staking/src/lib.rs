@@ -1794,6 +1794,8 @@ impl<T: Trait> Module<T> {
 impl<T: Trait> pallet_session::SessionManager<T::AccountId> for Module<T> {
 	fn new_session(new_index: SessionIndex) -> Option<Vec<T::AccountId>> {
 		Self::ensure_storage_upgraded();
+		// TODO TODO: this initialisation is wrong: it lacks initialisation of ErasBound, also
+		// maybe the first index is different from 0, we must create a function initial_era.
 		if new_index == 0 {
 			return Self::select_validators()
 		}
